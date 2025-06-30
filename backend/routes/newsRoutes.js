@@ -6,25 +6,25 @@ const router = express.Router();
 
 // Get news based on user's preference
 router.get('/', protect, async (req, res) => {
-    try {
-        const categories = req?.user?.preferences?.categories || ['general'];
-        const allNews = [];
+  try {
+    console.log("🔐 User from token:", req.user);
+    const categories = req?.user?.preferences?.categories || ['general'];
+    console.log("📑 Categories to fetch:", categories);
 
-        console.log(categories,"categories")
+    const allNews = [];
 
-
-        // const news = await fetchNews();
-        // allNews.push(...news);
-
-        for (const category of categories) {
-            const news = await fetchNews(category);
-            allNews.push(...news);
-        }
-
-        res.json(allNews);
-    } catch (err) {
-        res.status(500).json({ message: err.message });
+    for (const category of categories) {
+      const news = await fetchNews(category);
+      console.log(`🌐 News fetched for category "${category}":`, news.length);
+      allNews.push(...news);
     }
+
+    res.json(allNews);
+  } catch (err) {
+    console.error("❌ News fetch error:", err.message);
+    res.status(500).json({ message: err.message });
+  }
 });
+
 
 module.exports = router;
