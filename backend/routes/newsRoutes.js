@@ -7,13 +7,19 @@ const router = express.Router();
 // Get news based on user's preference
 router.get('/', protect, async (req, res) => {
   try {
-    console.log("🔐 User from token:", req.user);
-    const categories = req?.user?.preferences?.categories || ['general'];
-    console.log("📑 Categories to fetch:", categories);
+    const validCategories = ['business', 'entertainment', 'general', 'health', 'science', 'sports', 'technology'];
+    let categories = req?.user?.preferences?.categories || ['general'];
+
+    // Normalize and filter categories
+    categories = categories.map(cat => cat.toLowerCase());
+    const filteredCategories = categories.filter(cat => validCategories.includes(cat));
+    if (filteredCategories.length === 0) filteredCategories.push('general');
+
+    console.log("📑 Valid categories to fetch:", filteredCategories);
 
     const allNews = [];
 
-    for (const category of categories) {
+    for (const category of filteredCategories) {
       const news = await fetchNews(category);
       console.log(`🌐 News fetched for category "${category}":`, news.length);
       allNews.push(...news);
@@ -25,6 +31,7 @@ router.get('/', protect, async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
+
 
 
 module.exports = router;
