@@ -10,7 +10,7 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: 'https://marvelous-squirrel-d7f8a2.netlify.app/',
   credentials: true,
 }));
 

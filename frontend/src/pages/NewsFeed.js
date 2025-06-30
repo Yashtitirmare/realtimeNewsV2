@@ -10,7 +10,7 @@ const NewsFeed = () => {
 console.log("🔑 Token being sent:", localStorage.getItem('token'));
 ;
       try {
-        const res = await axios.get('http://localhost:5000/api/news', {
+        const res = await axios.get('https://realtimenewsv2.onrender.com/api/news', {
           headers: {
             Authorization: `Bearer ${token}`
           }
