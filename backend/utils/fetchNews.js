@@ -2,7 +2,7 @@ const axios = require('axios');
 const fetch = require('node-fetch');
 const fetchNews = async (category = 'general') => {
     try {
-        const url = `https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=f831474618a243dfa53a109be7e5e877`;
+        const url = `https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=c4c2fe63e4274e0db086238c67058629`;
         console.log("🔎 Fetching news from:", url);
         const { data } = await axios.get(url);
 
